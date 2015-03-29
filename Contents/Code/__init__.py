@@ -185,7 +185,8 @@ def videolinks(url):
     else:
         xml_link =BASE_URL+'/playlist/'+re.compile('http://movihd.net/phim/(.+?)_').findall(url)[0]+'_server-2.xml'
     link = HTTP.Request(xml_link,cacheTime=3600).content
-    soup = BeautifulSoup(link)
-    media = BASE_URL+soup('item')[0].next.next.next.next['url']
+    # soup = BeautifulSoup(link)
+    # media = BASE_URL+soup('item')[0].next.next.next.next['url']
+    media = BASE_URL + re.compile('"url_path": "(.+?)","bitrate_label"').findall(link)[0]
     return media
 ####################################################################################################
