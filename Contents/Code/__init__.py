@@ -137,7 +137,7 @@ def Episodes(title, eplink, epthumb):
     return oc
 
 @route('/video/movihd/createMediaObject')
-def createMediaObject(url, title,thumb,rating_key,include_container=False):
+def createMediaObject(url, title,thumb,rating_key,include_container=False,includeRelatedCount=None,includeRelated=None,includeExtras=None):
     container = Container.MP4
     video_codec = VideoCodec.H264
     audio_codec = AudioCodec.AAC
@@ -163,8 +163,7 @@ def createMediaObject(url, title,thumb,rating_key,include_container=False):
                 video_resolution = '720',
                 video_codec = video_codec,
                 audio_codec = audio_codec,
-                audio_channels = audio_channels,
-                optimized_for_streaming = True
+                audio_channels = audio_channels
             )
         ]
     )
@@ -187,6 +186,6 @@ def videolinks(url):
     link = HTTP.Request(xml_link,cacheTime=3600).content
     # soup = BeautifulSoup(link)
     # media = BASE_URL+soup('item')[0].next.next.next.next['url']
-    media = BASE_URL + re.compile('"url_path": "(.+?)","bitrate_label"').findall(link)[0]
+    media = re.compile('"url_path": "(.+?)","bitrate_label"').findall(link)[0]
     return media
 ####################################################################################################
